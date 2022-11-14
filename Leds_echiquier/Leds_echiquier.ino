@@ -1,48 +1,66 @@
-#include <Adafruit_NeoPixel.h>
-#define PIN 2
-#define NUMPIXELS 64
-#define DELAYVAL 100
-Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+#include <FastLED.h>
+
+#define LED_PIN     8
+#define COLOR_ORDER GRB
+#define CHIPSET     WS2811
+#define NUM_LEDS    82
+
+#define BRIGHTNESS  200
+#define FRAMES_PER_SECOND 60
+//CRGBPalette16 gPal;
+
+CRGB leds[NUM_LEDS];
+int blueLeds[]={0, 8, 9, 26, 27, 44, 45, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81};
+int whiteLeds[]={1, 3, 5, 7, 11, 13, 15, 17, 19, 21, 23, 25, 29, 31, 33, 35, 37, 39, 41, 43, 47, 49, 51, 53, 55, 57, 59, 61,62,63, 64,65, 66, 67,68, 69, 70}; 
 
 void setup() {
- Serial.begin(9600);
-  delay(100);
-  pixels.begin();
+  delay(3000); // sanity delay
+  FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
+  FastLED.setBrightness( BRIGHTNESS );
+ }
+
+void loop()
+{
+  static byte heat[NUM_LEDS];
+  FastLED.show(); // display this frame
+  FastLED.delay(1000 / FRAMES_PER_SECOND);
+
+for( int i = 1; i < 8; i+=2) {
+    leds[i]=CRGB(255,255,255);
+    FastLED.show();
+    }
+    
+for (int j = 11; j < 26 ; j+=2){
+  leds[j] = CRGB(255,255,255);
+  FastLED.show();
 }
 
-void loop() {
-//leds 1 et 4 en bleu
-//leds 2 et 5 en rouge
-//leds 3 et 6 en vert
-pixels.clear();
-int redPins[] = {1, 4, 7, 10};
-int greenPins[] = {2, 5, 8, 11};
-int bluePins[] = {3, 6, 9, 12};
-int purplePins[] = {13, 14, 15, 16};
-int yellowPins[] = {17, 18, 19, 20};
-for(int i=0; i<sizeof(redPins)/2;i++){ // doesn't work without /2
-  pixels.setPixelColor(redPins[i], pixels.Color(255, 0, 0)); //RED
-  pixels.setPixelColor(greenPins[i], pixels.Color(0, 255, 0)); //GREEN
-  pixels.setPixelColor(bluePins[i], pixels.Color(0, 0, 255)); //BLUE
-  pixels.setPixelColor(purplePins[i], pixels.Color(139, 0, 139)); //PURPLE
-  pixels.setPixelColor(yellowPins[i], pixels.Color(255, 255, 0)); //YELLOW
-  
-  pixels.show();
-  if(i==sizeof(redPins)-1){
-    break;
-  }
-   if(i==sizeof(greenPins)-1){
-    break;
-  }
-   if(i==sizeof(bluePins)-1){
-    break;
-  }
-   if(i==sizeof(purplePins)-1){
-    break;
-  }
-   if(i==sizeof(yellowPins)-1){
-    break;
-  }
+for (int k = 29 ; k < 44; k+=2){
+  leds[k] = CRGB(255,255,255);
+  FastLED.show();
 }
 
+for (int m = 47 ; m < 62; m+=2){
+  leds[m] = CRGB(255,255,255);
+  FastLED.show();
+}
+
+for (int n = 65 ; n < 73; n+=2){
+  leds[n] = CRGB(255,255,255);
+  FastLED.show();
+
+for (int p = 73 ; p < 81; p++){
+  leds[p] = CRGB(255,0,0);
+  FastLED.show();
+}
+  leds[8] = CRGB(255,0,0);
+  leds[9] = CRGB(255,0,0);
+  leds[26] = CRGB(255,0,0);
+  leds[27] = CRGB(255,0,0);
+  leds[44] = CRGB(255,0,0);
+  leds[45] = CRGB(255,0,0);
+  leds[62] = CRGB(255,0,0);
+  leds[63] = CRGB(255,0,0);
+  FastLED.show();
+}
 }
